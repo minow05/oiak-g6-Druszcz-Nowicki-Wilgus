@@ -3,21 +3,19 @@
 
 #include <vector>
 #include "Bit.h"
-#include "ParallelPrefixAdderElement.h"
 
-class FundamentalCarryOperator : public ParallelPrefixAdderElement {
+class FundamentalCarryOperator{
 public:
-    FundamentalCarryOperator(int id, std::vector<ParallelPrefixAdderElement *> outputs,
-                             ParallelPrefixAdderElement *highOutput);
-    ~FundamentalCarryOperator();
+    FundamentalCarryOperator(int column, std::vector<FundamentalCarryOperator*> bottomFundamentalCarryOperators);
+    FundamentalCarryOperator(int column, std::vector<Bit*> outputs);
     void execute();
-    void setHigh(Bit generationHigh, Bit propagationHighnrt);
+    void setHigh(Bit generationHigh, Bit propagationHigh);
     void setLow(Bit generationLow, Bit propagationLow);
+    int column;
 private:
-    std::vector<ParallelPrefixAdderElement*> lowOutputs;
-    ParallelPrefixAdderElement* highOutput;
     Bit generationHigh, propagationHigh, generationLow, propagationLow;
-
+    std::vector<FundamentalCarryOperator*> bottomFundamentalCarryOperators;
+    std::vector<Bit*> outputs;
 };
 
 #endif //OIAK_G6_DRUSZCZ_NOWICKI_WILGUS_FUNDAMENTALCARRYOPERATOR_H

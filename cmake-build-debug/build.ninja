@@ -49,14 +49,26 @@ cmake_ninja_workdir = C$:/GitHub_repos/oiak-g6-Druszcz-Nowicki-Wilgus/cmake-buil
 
 build cmake_object_order_depends_target_oiak_g6_Druszcz_Nowicki_Wilgus: phony || .
 
-build CMakeFiles/oiak_g6_Druszcz_Nowicki_Wilgus.dir/main.cpp.obj: CXX_COMPILER__oiak_g6_Druszcz_Nowicki_Wilgus_unscanned_Debug C$:/GitHub_repos/oiak-g6-Druszcz-Nowicki-Wilgus/main.cpp || cmake_object_order_depends_target_oiak_g6_Druszcz_Nowicki_Wilgus
-  DEP_FILE = CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir\main.cpp.obj.d
+build CMakeFiles/oiak_g6_Druszcz_Nowicki_Wilgus.dir/src/main.cpp.obj: CXX_COMPILER__oiak_g6_Druszcz_Nowicki_Wilgus_unscanned_Debug C$:/GitHub_repos/oiak-g6-Druszcz-Nowicki-Wilgus/src/main.cpp || cmake_object_order_depends_target_oiak_g6_Druszcz_Nowicki_Wilgus
+  DEP_FILE = CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir\src\main.cpp.obj.d
   FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir
-  OBJECT_FILE_DIR = CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir
+  OBJECT_FILE_DIR = CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir\src
 
 build CMakeFiles/oiak_g6_Druszcz_Nowicki_Wilgus.dir/src/FundamentalCarryOperator.cpp.obj: CXX_COMPILER__oiak_g6_Druszcz_Nowicki_Wilgus_unscanned_Debug C$:/GitHub_repos/oiak-g6-Druszcz-Nowicki-Wilgus/src/FundamentalCarryOperator.cpp || cmake_object_order_depends_target_oiak_g6_Druszcz_Nowicki_Wilgus
   DEP_FILE = CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir\src\FundamentalCarryOperator.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir
+  OBJECT_FILE_DIR = CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir\src
+
+build CMakeFiles/oiak_g6_Druszcz_Nowicki_Wilgus.dir/src/HalfAdder.cpp.obj: CXX_COMPILER__oiak_g6_Druszcz_Nowicki_Wilgus_unscanned_Debug C$:/GitHub_repos/oiak-g6-Druszcz-Nowicki-Wilgus/src/HalfAdder.cpp || cmake_object_order_depends_target_oiak_g6_Druszcz_Nowicki_Wilgus
+  DEP_FILE = CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir\src\HalfAdder.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir
+  OBJECT_FILE_DIR = CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir\src
+
+build CMakeFiles/oiak_g6_Druszcz_Nowicki_Wilgus.dir/src/SumGenerator.cpp.obj: CXX_COMPILER__oiak_g6_Druszcz_Nowicki_Wilgus_unscanned_Debug C$:/GitHub_repos/oiak-g6-Druszcz-Nowicki-Wilgus/src/SumGenerator.cpp || cmake_object_order_depends_target_oiak_g6_Druszcz_Nowicki_Wilgus
+  DEP_FILE = CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir\src\SumGenerator.cpp.obj.d
   FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir
   OBJECT_FILE_DIR = CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir\src
@@ -69,7 +81,7 @@ build CMakeFiles/oiak_g6_Druszcz_Nowicki_Wilgus.dir/src/FundamentalCarryOperator
 #############################################
 # Link the executable oiak_g6_Druszcz_Nowicki_Wilgus.exe
 
-build oiak_g6_Druszcz_Nowicki_Wilgus.exe: CXX_EXECUTABLE_LINKER__oiak_g6_Druszcz_Nowicki_Wilgus_Debug CMakeFiles/oiak_g6_Druszcz_Nowicki_Wilgus.dir/main.cpp.obj CMakeFiles/oiak_g6_Druszcz_Nowicki_Wilgus.dir/src/FundamentalCarryOperator.cpp.obj
+build oiak_g6_Druszcz_Nowicki_Wilgus.exe: CXX_EXECUTABLE_LINKER__oiak_g6_Druszcz_Nowicki_Wilgus_Debug CMakeFiles/oiak_g6_Druszcz_Nowicki_Wilgus.dir/src/main.cpp.obj CMakeFiles/oiak_g6_Druszcz_Nowicki_Wilgus.dir/src/FundamentalCarryOperator.cpp.obj CMakeFiles/oiak_g6_Druszcz_Nowicki_Wilgus.dir/src/HalfAdder.cpp.obj CMakeFiles/oiak_g6_Druszcz_Nowicki_Wilgus.dir/src/SumGenerator.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir
