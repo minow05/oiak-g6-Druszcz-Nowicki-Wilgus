@@ -5,8 +5,8 @@
 class FlaggedAdder{
 protected:
     int size = 0;
-    virtual void computeGeneratePropagate();
-    virtual void computeFlaggedPrefixTree();
+    void computeGeneratePropagate();
+    void computeFlaggedPrefixTree();
     void computeSum();
 public:
     void printDebug() const;
