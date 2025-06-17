@@ -1,0 +1,3 @@
+C:\Users\minow\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -E rm -f CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir/objects.a
+C:\Users\minow\AppData\Local\Programs\CLion\bin\mingw\bin\ar.exe qc CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir/objects.a @CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir\objects1.rsp
+C:\Users\minow\AppData\Local\Programs\CLion\bin\mingw\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir/objects.a -Wl,--no-whole-archive -o oiak_g6_Druszcz_Nowicki_Wilgus.exe -Wl,--out-implib,liboiak_g6_Druszcz_Nowicki_Wilgus.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\oiak_g6_Druszcz_Nowicki_Wilgus.dir\linkLibs.rsp
