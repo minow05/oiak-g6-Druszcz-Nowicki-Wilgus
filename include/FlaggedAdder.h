@@ -14,7 +14,6 @@ protected:
     virtual void computeSum() = 0;
 public:
     void printDebug() const;
-    void setFlags(int index);
 };
 
 #endif //OIAK_G6_DRUSZCZ_NOWICKI_WILGUS_FLAGGEDADDER_H

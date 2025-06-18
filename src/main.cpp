@@ -5,7 +5,6 @@
 int main(){
     uint64_t A = 0b0000000000000000000000000000000000000000000000000000000000100011;
     uint64_t B = 0b0000000000000000000000000000000000000000000000000000000000000110;
-    uint64_t f = 0b0000000000000000000000000000000000000000000000000000000000000100;
 //    PrefixAdder8 adder(A, B);
 //    adder.printDebug();
 //
@@ -20,7 +19,7 @@ int main(){
 //    std::cout << "flaga na 4 bicie:\n";
 //    adder2.printDebug();
 //    std::cout << "\n";
-    FlaggedKoggeStone64 adder(A, B, f, 0);
+    FlaggedKoggeStone64 adder(A, B, 0, 0);
     adder.printDebug();
 
     return 0;
