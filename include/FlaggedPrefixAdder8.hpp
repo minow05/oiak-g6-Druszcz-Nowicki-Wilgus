@@ -8,108 +8,124 @@
 
 class FlaggedPrefixAdder8 {
 private:
-    std::vector<bool> A, B, G, P, K, C, S;
-    std::vector<bool> flags;
+    std::vector<bool> A, B, G, P, notK, C, S;
+    bool inc, cmp;
 
     void computeGeneratePropagate() {
         G.resize(8);
         P.resize(8);
-        K.resize(8);
-        
+        notK.resize(8);
+
         for (int i = 0; i < 8; ++i) {
             G[i] = A[i] & B[i];
             P[i] = A[i] ^ B[i];
-            // Kill signal - when flag is set, it kills the carry propagation
-            K[i] = flags[i];
+            notK[i] = A[i] | B[i]; // notK = A OR B
         }
     }
 
-    // Flagged Brent-Kung PPA
+    // Poprawiony Flagged Brent-Kung prefix adder
     void computeFlaggedPrefixTree() {
         C.resize(9);
-        C[0] = false;  // Cin = 0
+        C[0] = inc; // inc = 1 -> carry-in = 1 (late increment)
 
-        std::vector<bool> G1(8), P1(8), K1(8);
-        std::vector<bool> G2(8), P2(8), K2(8);
-        std::vector<bool> G3(8), P3(8), K3(8);
+        std::vector<bool> G_curr(8), notK_curr(8);
+        std::vector<bool> G_next(8), notK_next(8);
+        
+        for (int i = 0; i < 8; ++i) {
+            G_curr[i] = G[i];
+            notK_curr[i] = notK[i];
+        }
 
-        // Level 1 - compute (G,P,K) pairs
+        // Level 1:
+        for (int i = 0; i < 8; ++i) {
+            G_next[i] = G_curr[i];
+            notK_next[i] = notK_curr[i];
+        }
+        
         for (int i = 1; i < 8; i += 2) {
-            G1[i] = G[i] | (P[i] & G[i-1] & !K[i-1]);
-            P1[i] = P[i] & P[i-1] & !K[i-1];
-            K1[i] = K[i] | K[i-1];
+            G_next[i] = G_curr[i] | (notK_curr[i] & G_curr[i - 1]);
+            notK_next[i] = notK_curr[i] & notK_curr[i - 1];
         }
+        
+        G_curr = G_next;
+        notK_curr = notK_next;
 
-        // Level 2
+        // Level 2:
         for (int i = 3; i < 8; i += 4) {
-            G2[i] = G1[i] | (P1[i] & G1[i-2] & !K1[i-2]);
-            P2[i] = P1[i] & P1[i-2] & !K1[i-2];
-            K2[i] = K1[i] | K1[i-2];
+            G_next[i] = G_curr[i] | (notK_curr[i] & G_curr[i - 2]);
+            notK_next[i] = notK_curr[i] & notK_curr[i - 2];
+        }
+        
+        G_curr = G_next;
+        notK_curr = notK_next;
+
+        // Level 3:
+        G_next[7] = G_curr[7] | (notK_curr[7] & G_curr[3]);
+        notK_next[7] = notK_curr[7] & notK_curr[3];
+        
+        
+        G_curr = G_next;
+        notK_curr = notK_next;
+
+        std::vector<bool> G_final(8), notK_final(8);
+        for (int i = 0; i < 8; ++i) {
+            G_final[i] = G_curr[i];
+            notK_final[i] = notK_curr[i];
         }
 
-        // Level 3
-        if (!K2[3]) {
-            G3[7] = G2[7] | (P2[7] & G2[3]);
-            P3[7] = P2[7] & P2[3];
-        } else {
-            G3[7] = G2[7];
-            P3[7] = false;
+        // Level 3 backward: propaguj z pozycji 7 do 5, 6
+        for (int i = 4; i < 7; ++i) {
+            if (i != 7) {
+                G_final[i] = G_final[i] | (notK_final[i] & G_final[7]);
+                notK_final[i] = notK_final[i] & notK_final[7];
+            }
         }
-        K3[7] = K2[7] | K2[3];
 
-        // Compute final carries with flag consideration
-        C[1] = G[0] & !K[0];
-        
-        if (!K1[1]) {
-            C[2] = G1[1];
-        } else {
-            C[2] = false;
+        // Level 2 backward: propaguj z pozycji 3, 7 do 1, 2, 5, 6
+        for (int i = 0; i < 8; ++i) {
+            if (i != 3 && i != 7) {
+                int ref_pos = (i < 4) ? 3 : 7;
+                if (ref_pos < 8) {
+                    G_final[i] = G_final[i] | (notK_final[i] & G_final[ref_pos]);
+                    notK_final[i] = notK_final[i] & notK_final[ref_pos];
+                }
+            }
         }
-        
-        C[3] = (G[2] | (P[2] & G1[1])) & !K[2] & !(K[2] | K1[1]);
-        
-        if (!K2[3]) {
-            C[4] = G2[3];
-        } else {
-            C[4] = false;
+
+        // Level 1 backward: propaguj z pozycji nieparzystych do parzystych
+        for (int i = 0; i < 8; i += 2) {
+            if (i + 1 < 8) {
+                G_final[i] = G_final[i] | (notK_final[i] & G_final[i + 1]);
+                notK_final[i] = notK_final[i] & notK_final[i + 1];
+            }
         }
-        
-        C[5] = (G[4] | (P[4] & G2[3])) & !K[4] & !(K[4] | K2[3]);
-        
-        if (!K1[5] && !K2[3]) {
-            C[6] = G1[5] | (P1[5] & G2[3]);
-        } else {
-            C[6] = G1[5] & !K1[5];
-        }
-        
-        C[7] = (G[6] | (P[6] & C[6])) & !K[6];
-        
-        if (!K3[7]) {
-            C[8] = G3[7];
-        } else {
-            C[8] = false;
+
+        // Oblicz ostateczne carry
+        for (int i = 0; i < 8; ++i) {
+            C[i + 1] = G_final[i] | (notK_final[i] & C[0]);
         }
     }
 
     void computeSum() {
         S.resize(8);
         for (int i = 0; i < 8; ++i) {
-            S[i] = P[i] ^ C[i];
+            bool baseSum = P[i] ^ C[i];
+            S[i] = cmp ? !baseSum : baseSum; // cmp=1 -> negacja sumy
         }
     }
 
 public:
-    FlaggedPrefixAdder8(uint8_t a, uint8_t b, uint8_t flagMask = 0) {
+    FlaggedPrefixAdder8(uint8_t a, uint8_t b, bool incControl = false, bool cmpControl = false) {
         A.resize(8);
         B.resize(8);
-        flags.resize(8);
-        
+        inc = incControl;
+        cmp = cmpControl;
+
         for (int i = 0; i < 8; ++i) {
             A[i] = (a >> i) & 1;
             B[i] = (b >> i) & 1;
-            flags[i] = (flagMask >> i) & 1;
         }
-        
+
         computeGeneratePropagate();
         computeFlaggedPrefixTree();
         computeSum();
@@ -127,12 +143,9 @@ public:
         return C[8];
     }
 
-    void setFlags(uint8_t flagMask) {
-        for (int i = 0; i < 8; ++i) {
-            flags[i] = (flagMask >> i) & 1;
-        }
-        // Recompute with new flags
-        computeGeneratePropagate();
+    void setControl(bool incControl, bool cmpControl) {
+        inc = incControl;
+        cmp = cmpControl;
         computeFlaggedPrefixTree();
         computeSum();
     }
@@ -143,27 +156,18 @@ public:
             for (int i = 0; i < 8; ++i) a |= (A[i] << i);
             return a;
         }()) << "\n";
-        
+
         std::cout << "B     = " << std::bitset<8>([this]() {
             uint8_t b = 0;
             for (int i = 0; i < 8; ++i) b |= (B[i] << i);
             return b;
         }()) << "\n";
-        
-        std::cout << "Flags = " << std::bitset<8>([this]() {
-            uint8_t f = 0;
-            for (int i = 0; i < 8; ++i) f |= (flags[i] << i);
-            return f;
-        }()) << "\n";
-        
+
+        std::cout << "inc   = " << inc << "\n";
+        std::cout << "cmp   = " << cmp << "\n";
+
         std::cout << "Sum   = " << std::bitset<8>(getSum()) << "\n";
         std::cout << "Cout  = " << getCarryOut() << "\n";
-        
-        std::cout << "Carries: ";
-        for (int i = 0; i <= 8; ++i) {
-            std::cout << C[i];
-        }
-        std::cout << "\n";
     }
 };
 

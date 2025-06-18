@@ -3,8 +3,9 @@
 #include "../include/FlaggedKoggeStone64.h"
 
 int main(){
-    uint8_t A = 0b10010001;
-    uint8_t B = 0b00010001;
+    uint64_t A = 0b0000000000000000000000000000000000000000000000000000000000100011;
+    uint64_t B = 0b0000000000000000000000000000000000000000000000000000000000000110;
+    uint64_t f = 0b0000000000000000000000000000000000000000000000000000000000000100;
 //    PrefixAdder8 adder(A, B);
 //    adder.printDebug();
 //
@@ -19,7 +20,7 @@ int main(){
 //    std::cout << "flaga na 4 bicie:\n";
 //    adder2.printDebug();
 //    std::cout << "\n";
-    FlaggedKoggeStone64 adder(A, B);
+    FlaggedKoggeStone64 adder(A, B, f, 0);
     adder.printDebug();
 
     return 0;
