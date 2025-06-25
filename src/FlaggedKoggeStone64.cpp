@@ -43,6 +43,11 @@ void FlaggedKoggeStone64::computeSum() {
     }
 }
 
-void FlaggedKoggeStone64::printDebug() const {
-    std::cout << S << '\n';
+void FlaggedKoggeStone64::printDebug(uint64_t x, uint64_t y) const {
+    std::cout << "A     = " << std::bitset<64>(A) << "\n";
+    std::cout << "B     = " << std::bitset<64>(B) << "\n";
+    std::cout << "inc   = " << inc << "\n";
+    std::cout << "cmp   = " << cmp << "\n";
+    std::cout << "Sum   = " <<  S << "\n";
+    std::cout << "\n";
 }

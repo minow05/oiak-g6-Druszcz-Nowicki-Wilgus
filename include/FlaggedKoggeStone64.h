@@ -18,7 +18,7 @@ private:
     void computeSum() override;
 public:
     FlaggedKoggeStone64(uint64_t x, uint64_t y, bool cmp, bool inc);
-    void printDebug() const;
+    void printDebug(uint64_t x, uint64_t y) const;
 };
 
 #endif //OIAK_G6_DRUSZCZ_NOWICKI_WILGUS_FLAGGEDKOGGESTONE64_H
