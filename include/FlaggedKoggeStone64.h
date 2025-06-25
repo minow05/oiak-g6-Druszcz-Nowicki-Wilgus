@@ -11,7 +11,7 @@
 
 class FlaggedKoggeStone64 : public FlaggedAdder {
 private:
-    std::bitset<64> A, B, G, P, S, K; // a, b, generate, propagate, sum, kill, halfsum
+    std::bitset<64> A, B, G, P, S, K, C; // a, b, generate, propagate, sum, kill, halfsum
     bool inc, cmp = 0; // increment, negate
     void computeGeneratePropagate() override;
     void computeFlaggedPrefixTree() override;
@@ -19,6 +19,7 @@ private:
 public:
     FlaggedKoggeStone64(uint64_t x, uint64_t y, bool cmp, bool inc);
     void printDebug(uint64_t x, uint64_t y) const;
+    bool getCarryOut() const;
 };
 
 #endif //OIAK_G6_DRUSZCZ_NOWICKI_WILGUS_FLAGGEDKOGGESTONE64_H

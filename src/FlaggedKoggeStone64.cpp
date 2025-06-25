@@ -41,6 +41,11 @@ void FlaggedKoggeStone64::computeSum() {
     for (int i = 1; i < size; i++){
         S[i] = ((K[i-1] & inc) | G[i-1])^(P[i] ^ cmp);
     }
+     C[SIZE - 1] = G[SIZE - 1] | (K[SIZE - 1] & C[SIZE - 2]);
+}
+
+bool FlaggedKoggeStone64::getCarryOut() const {
+    return C[SIZE-1];
 }
 
 void FlaggedKoggeStone64::printDebug(uint64_t x, uint64_t y) const {
@@ -49,5 +54,5 @@ void FlaggedKoggeStone64::printDebug(uint64_t x, uint64_t y) const {
     std::cout << "inc   = " << inc << "\n";
     std::cout << "cmp   = " << cmp << "\n";
     std::cout << "Sum   = " <<  S << "\n";
-    std::cout << "\n";
+    std::cout << "Cout  = " << getCarryOut() << "\n";
 }
